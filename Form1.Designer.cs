@@ -76,6 +76,7 @@
             this.btnGiris.TabIndex = 4;
             this.btnGiris.Text = "Giriş YAP";
             this.btnGiris.UseVisualStyleBackColor = true;
+            this.btnGiris.Click += new System.EventHandler(this.btnGiris_Click);
             // 
             // Form1
             // 
@@ -91,6 +92,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "QC-Master - Kullanıcı Girişi";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
