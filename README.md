@@ -25,10 +25,10 @@ Projenin veritabanı ile haberleşebilmesi için bağlantı dizesinin (Connectio
 
 ### 3. Bağımlılıkların Geri Yüklenmesi
 Proje, veritabanı işlemleri için `System.Data.SqlClient` paketini kullanmaktadır. 
-* Projeyi Visual Studio ile açtıktan sonra, Solution Explorer (Çözüm Gezgini) penceresinde Solution'a sağ tıklayıp **"Restore NuGet Packages"** (NuGet Paketlerini Geri Yükle) seçeneğine tıklayın.
+* Projeyi Visual Studio ile açtıktan sonra, Solution Explorer (Çözüm Gezgini) penceresinde Solution'a sağ tıklayıp **Restore NuGet Packages** (NuGet Paketlerini Geri Yükle) seçeneğine tıklayın.
 
 ### 4. Sistemin İlk Kez Çalıştırılması
 Gerekli yapılandırmaları tamamladıktan sonra projeyi derleyip çalıştırın (F5).
-* Sistem başlangıçta veritabanını kontrol edecek ve kayıtlı hiçbir kullanıcı bulamadığı için otomatik olarak **"Sistem Kurulum Modu"**na geçecektir.
-* Karşınıza çıkan ekranda, kendinize ait bir Sicil Numarası ve Şifre belirleyerek **"SİSTEM YÖNETİCİSİ OLUŞTUR"** butonuna tıklayın. 
+* Sistem başlangıçta veritabanını kontrol edecek ve kayıtlı hiçbir kullanıcı bulamadığı için otomatik olarak **Sistem Kurulum Modu**'na geçecektir.
+* Karşınıza çıkan ekranda, kendinize ait bir Sicil Numarası ve Şifre belirleyerek **SİSTEM YÖNETİCİSİ OLUŞTUR** butonuna tıklayın.
 * Bu işlem, sizi "Sistem Yöneticisi" rolü ile veritabanına kaydedecektir. Ardından standart giriş moduna dönen ekrandan kendi bilgilerinizle sisteme giriş yapabilirsiniz.
