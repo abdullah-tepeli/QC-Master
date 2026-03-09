@@ -1,12 +1,12 @@
 /*
     QC-Master Veritabaný Baþlatma Scripti
-    Bu script mevcut QC-MasterDB veritabanýný siler ve tüm þemayý sýfýrdan oluþturur.
+    Bu betik, mevcut QC-MasterDB veritabanýný temizler ve tüm þemayý sýfýrdan oluþturur.
 */
 
 USE master;
 GO
 
--- 1. Eðer veritabaný varsa, tüm baðlantýlarý kopar ve veritabanýný uçur
+-- 1. Mevcut baðlantýlarý sonlandýr ve eski veritabanýný sil
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'QC-MasterDB')
 BEGIN
     ALTER DATABASE [QC-MasterDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
@@ -14,7 +14,7 @@ BEGIN
 END
 GO
 
--- 2. Veritabanýný taze taze oluþtur
+-- 2. Yeni veritabaný mimarisini oluþtur
 CREATE DATABASE [QC-MasterDB];
 GO
 
@@ -95,7 +95,7 @@ CREATE TABLE UretimLoglari (
 GO
 
 -- ==========================================
--- TOHUMLAMA (SEED DATA)
+-- VARSAYILAN VERÝLERÝN YÜKLENMESÝ (SEED DATA)
 -- ==========================================
 
 INSERT INTO Roller (Rol_Adi) VALUES (N'Sistem Yöneticisi'), (N'Kalite Mühendisi'), (N'Bant Operatörü');
