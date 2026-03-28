@@ -22,7 +22,7 @@ namespace QC_Master
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void GirisFormu_Load(object sender, EventArgs e)
         {
             // Veritabanı bağlantısı açılıyor. using bloğu kaynakların doğru yönetilmesi için kullanılmıştır.
             using (SqlConnection baglanti = new SqlConnection(baglantiCumlesi))
@@ -127,7 +127,7 @@ namespace QC_Master
                     {
                         // Kullanıcı kimliği, rolü ve vardiya saatleri sunucu saatiyle birlikte sorgulanıyor.
                         string girisSorgu = @"
-                            SELECT k.Ad_Soyad, r.Rol_Adi, v.Baslangic_Saati, v.Bitis_Saati, CAST(GETDATE() AS TIME) as SunucuSaati
+                            SELECT k.Kullanici_ID, k.Ad_Soyad, r.Rol_Adi, v.Baslangic_Saati, v.Bitis_Saati, CAST(GETDATE() AS TIME) as SunucuSaati
                             FROM Kullanicilar k 
                             INNER JOIN Roller r ON k.Rol_ID = r.Rol_ID 
                             LEFT JOIN Vardiyalar v ON k.Vardiya_ID = v.Vardiya_ID
@@ -141,6 +141,7 @@ namespace QC_Master
                         {
                             if (reader.Read())
                             {
+                                int id = Convert.ToInt32(reader["Kullanici_ID"]);
                                 string adSoyad = reader["Ad_Soyad"].ToString();
                                 string rolAdi = reader["Rol_Adi"].ToString();
 
@@ -164,9 +165,9 @@ namespace QC_Master
                                         return;
                                     }
                                 }
-
-                                MessageBox.Show("Hoş geldiniz, " + adSoyad + ".\nYetki Düzeyi: " + rolAdi, "Giriş Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                // TODO: Ana form yönlendirme işlemleri eklenecektir.
+                                AnaForm anaEkran = new AnaForm(id, rolAdi, adSoyad);
+                                this.Hide();
+                                anaEkran.Show();
                             }
                             else
                             {
@@ -182,5 +183,6 @@ namespace QC_Master
                 }
             }
         }
+
     }
 }
