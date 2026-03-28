@@ -1,6 +1,6 @@
 ﻿namespace QC_Master
 {
-    partial class Form1
+    partial class GirisFormu
     {
         /// <summary>
         /// Required designer variable.

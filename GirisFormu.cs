@@ -13,11 +13,11 @@ using System.Windows.Forms;
 
 namespace QC_Master
 {
-    public partial class Form1 : Form
+    public partial class GirisFormu : Form
     {
         string baglantiCumlesi = ConfigurationManager.ConnectionStrings["QCMasterConn"].ConnectionString;
         bool ilkKurulumMu = false;
-        public Form1()
+        public GirisFormu()
         {
             InitializeComponent();
         }
