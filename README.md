@@ -1,4 +1,6 @@
 # QC-Master: Endüstriyel Üretim Fire, Kalite Kontrol ve Personel Yönetim Sistemi
+> **DİKKAT: GELİŞTİRME AŞAMASINDADIR (WORK IN PROGRESS)**
+> Bu proje şu an aktif olarak kodlanmaktadır. Henüz tüm modülleri tamamlanmadığı için şu anki sürümü indirip kurduğunuzda tam kapasite çalışmayacaktır. Sadece veritabanı mimarisini, arayüz tasarımını ve kod yapısını incelemek isteyenler için erişime açıktır. Kararlı sürüm yayınlandığında bu uyarı kaldırılacaktır.
 
 QC-Master, üretim hatlarındaki kalite kontrol süreçlerini, makine bazlı arıza kayıtlarını, vardiya planlamalarını ve personel yetkilendirmelerini merkezi bir veritabanı üzerinden yönetmek amacıyla geliştirilmiş C# (WinForms) tabanlı bir masaüstü otomasyon projesidir.
 
