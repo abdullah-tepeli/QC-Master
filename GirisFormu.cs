@@ -73,7 +73,7 @@ namespace QC_Master
 
         private void btnGiris_Click(object sender, EventArgs e)
         {
-            string sicil = txtSicilNo.Text.Trim();
+            string sicil = txtSicil.Text.Trim();
             string sifre = txtSifre.Text.Trim();
 
             // Kullanıcı giriş alanlarının geçerliliği kontrol ediliyor.
@@ -120,7 +120,7 @@ namespace QC_Master
                         ilkKurulumMu = false;
                         this.Text = "QC-Master - Kullanıcı Girişi";
                         btnGiris.Text = "GİRİŞ YAP";
-                        txtSicilNo.Clear();
+                        txtSicil.Clear();
                         txtSifre.Clear();
                     }
                     else

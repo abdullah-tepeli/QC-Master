@@ -156,6 +156,7 @@
             // 
             this.gridSonIslemler.AllowUserToAddRows = false;
             this.gridSonIslemler.AllowUserToDeleteRows = false;
+            this.gridSonIslemler.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridSonIslemler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSonIslemler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridSonIslemler.Location = new System.Drawing.Point(0, 120);
