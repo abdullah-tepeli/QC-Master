@@ -27,6 +27,9 @@ namespace QC_Master
         {
             this.Text = $"QC-Master | Üretim ve Kontrol Merkezi - Hoş Geldin, {aktifKullanici}";
             tabControl1.TabPages.Add("tabGosterge", "Gösterge Paneli");
+            UC_Gosterge panelGosterge = new UC_Gosterge();
+            panelGosterge.Dock = DockStyle.Fill;
+            tabControl1.TabPages["tabGosterge"].Controls.Add(panelGosterge);
             if (aktifRol == "Sistem Yöneticisi")
             {
                 tabControl1.TabPages.Add("tabUretim", "Üretim ve Fire Girişi");
