@@ -143,8 +143,8 @@ namespace QC_Master
             }
             // Hafızalı Yenileme: İş bitince makine listesini SQL'den tazeliyoruz ama operatörün seçimini unutmuyoruz.
             MakineleriDoldur(seciliMakineID);
-            // Alt kutuları da eski seçime göre tazele
-            MakineyeGoreAltKutulariDoldur(seciliUrunID, seciliHataID);
+            // Alt kutuları da eski seçime göre tazeliyoruz ve sadece seçili ürüne geri odaklanıyoruz.
+            MakineyeGoreAltKutulariDoldur(seciliUrunID);
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {

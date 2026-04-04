@@ -39,7 +39,7 @@ namespace QC_Master
                         // Sistemde kullanıcı bulunamadığı için ilk kurulum modu aktif ediliyor.
                         ilkKurulumMu = true;
                         // Kullanıcı arayüzü ilk yönetici kaydına uygun olarak güncelleniyor.
-                        this.Text = "QC-Master - Sistem Kurulumu";
+                        this.Text = "QC-Master | Sistem Kurulumu";
                         btnGiris.Text = "SİSTEM YÖNETİCİSİ OLUŞTUR";
                         MessageBox.Show("Sistemde kayıtlı kullanıcı bulunamadı.\nLütfen ilk sistem yöneticisi hesabını oluşturunuz.", "Sistem Kurulumu", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -105,7 +105,7 @@ namespace QC_Master
                         MessageBox.Show("Sistem yöneticisi hesabı başarıyla oluşturuldu. Lütfen oluşturduğunuz bilgilerle giriş yapınız.", "Kayıt Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         // Arayüz standart kullanıcı giriş moduna döndürülüyor.
                         ilkKurulumMu = false;
-                        this.Text = "QC-Master - Kullanıcı Girişi";
+                        this.Text = "QC-Master | Kullanıcı Girişi";
                         btnGiris.Text = "GİRİŞ YAP";
                         txtSicil.Clear();
                         txtSifre.Clear();
