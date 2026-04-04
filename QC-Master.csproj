@@ -70,6 +70,30 @@
     <Compile Include="UC_Gosterge.Designer.cs">
       <DependentUpon>UC_Gosterge.cs</DependentUpon>
     </Compile>
+    <Compile Include="UC_Makine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Makine.Designer.cs">
+      <DependentUpon>UC_Makine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UC_Personel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Personel.Designer.cs">
+      <DependentUpon>UC_Personel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UC_Rapor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Rapor.Designer.cs">
+      <DependentUpon>UC_Rapor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UC_UretimGirisi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_UretimGirisi.Designer.cs">
+      <DependentUpon>UC_UretimGirisi.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AnaForm.resx">
       <DependentUpon>AnaForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,6 +111,9 @@
     </Compile>
     <EmbeddedResource Include="UC_Gosterge.resx">
       <DependentUpon>UC_Gosterge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_UretimGirisi.resx">
+      <DependentUpon>UC_UretimGirisi.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

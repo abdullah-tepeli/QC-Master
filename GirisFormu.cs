@@ -30,22 +30,17 @@ namespace QC_Master
                 try
                 {
                     baglanti.Open();
-
                     // Sistemde kayıtlı herhangi bir kullanıcı olup olmadığı kontrol ediliyor.
                     string sorgu = "SELECT COUNT(*) FROM Kullanicilar";
                     SqlCommand komut = new SqlCommand(sorgu, baglanti);
-
                     int kullaniciSayisi = (int)komut.ExecuteScalar();
-
                     if (kullaniciSayisi == 0)
                     {
                         // Sistemde kullanıcı bulunamadığı için ilk kurulum modu aktif ediliyor.
                         ilkKurulumMu = true;
-
                         // Kullanıcı arayüzü ilk yönetici kaydına uygun olarak güncelleniyor.
                         this.Text = "QC-Master - Sistem Kurulumu";
                         btnGiris.Text = "SİSTEM YÖNETİCİSİ OLUŞTUR";
-
                         MessageBox.Show("Sistemde kayıtlı kullanıcı bulunamadı.\nLütfen ilk sistem yöneticisi hesabını oluşturunuz.", "Sistem Kurulumu", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
@@ -75,30 +70,25 @@ namespace QC_Master
         {
             string sicil = txtSicil.Text.Trim();
             string sifre = txtSifre.Text.Trim();
-
             // Kullanıcı giriş alanlarının geçerliliği kontrol ediliyor.
             if (string.IsNullOrEmpty(sicil) || string.IsNullOrEmpty(sifre))
             {
                 MessageBox.Show("Lütfen sicil numarası ve şifre alanlarını boş bırakmayınız.", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             // Güvenlik amacıyla kullanıcı şifresi SHA256 ile şifreleniyor.
             string hashliSifre = SifreyiHashle(sifre);
-
             using (SqlConnection baglanti = new SqlConnection(baglantiCumlesi))
             {
                 try
                 {
                     baglanti.Open();
-
                     if (ilkKurulumMu)
                     {
                         // İlk kurulum aşaması: Mevcut 'Sistem Yöneticisi' rolü sorgulanarak kurucu kullanıcı kaydediliyor.
                         string kayitSorgu = @"
                             DECLARE @RolId INT;
-                            SELECT TOP 1 @RolId = Rol_ID FROM Roller WHERE Rol_Adi = 'Sistem Yöneticisi';
-                            
+                            SELECT TOP 1 @RolId = Rol_ID FROM Roller WHERE Rol_Adi = 'Sistem Yöneticisi';                           
                             IF @RolId IS NOT NULL
                             BEGIN
                                 INSERT INTO Kullanicilar (Sicil_No, Ad_Soyad, Sifre_Hash, Rol_ID, IsActive) 
@@ -108,14 +98,11 @@ namespace QC_Master
                             BEGIN
                                 THROW 50000, 'Veritabanında Sistem Yöneticisi rolü bulunamadı. Lütfen SQL şablonunu kontrol ediniz.', 1;
                             END";
-
                         SqlCommand cmd = new SqlCommand(kayitSorgu, baglanti);
                         cmd.Parameters.AddWithValue("@sicil", sicil);
                         cmd.Parameters.AddWithValue("@sifre", hashliSifre);
                         cmd.ExecuteNonQuery();
-
                         MessageBox.Show("Sistem yöneticisi hesabı başarıyla oluşturuldu. Lütfen oluşturduğunuz bilgilerle giriş yapınız.", "Kayıt Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                         // Arayüz standart kullanıcı giriş moduna döndürülüyor.
                         ilkKurulumMu = false;
                         this.Text = "QC-Master - Kullanıcı Girişi";
@@ -132,11 +119,9 @@ namespace QC_Master
                             INNER JOIN Roller r ON k.Rol_ID = r.Rol_ID 
                             LEFT JOIN Vardiyalar v ON k.Vardiya_ID = v.Vardiya_ID
                             WHERE k.Sicil_No = @sicil AND k.Sifre_Hash = @sifre AND k.IsActive = 1";
-
                         SqlCommand cmd = new SqlCommand(girisSorgu, baglanti);
                         cmd.Parameters.AddWithValue("@sicil", sicil);
                         cmd.Parameters.AddWithValue("@sifre", hashliSifre);
-
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
@@ -144,20 +129,17 @@ namespace QC_Master
                                 int id = Convert.ToInt32(reader["Kullanici_ID"]);
                                 string adSoyad = reader["Ad_Soyad"].ToString();
                                 string rolAdi = reader["Rol_Adi"].ToString();
-
                                 // Vardiya saatleri kontrolü (Vardiya atanmamışsa her zaman erişim sağlanır)
                                 if (reader["Baslangic_Saati"] != DBNull.Value && reader["Bitis_Saati"] != DBNull.Value)
                                 {
                                     TimeSpan baslangic = (TimeSpan)reader["Baslangic_Saati"];
                                     TimeSpan bitis = (TimeSpan)reader["Bitis_Saati"];
                                     TimeSpan suAn = (TimeSpan)reader["SunucuSaati"];
-
                                     bool vardiyaIci = false;
                                     if (baslangic <= bitis)
                                         vardiyaIci = (suAn >= baslangic && suAn <= bitis); // Aynı gün içindeki vardiya
                                     else
                                         vardiyaIci = (suAn >= baslangic || suAn <= bitis); // Gece vardiyası (ertesi güne sarkan)
-
                                     // Sistem Yöneticisi vardiya kısıtlamasına tabi değildir.
                                     if (!vardiyaIci && rolAdi != "Sistem Yöneticisi")
                                     {
@@ -183,6 +165,5 @@ namespace QC_Master
                 }
             }
         }
-
     }
 }

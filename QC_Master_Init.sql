@@ -109,8 +109,23 @@ INSERT INTO Makineler (Makine_Kodu, Makine_Adi, Makine_Tip_ID) VALUES
 (N'MKN-01', N'Boya Fýrýný 1', 1), (N'MKN-02', N'CNC Freze', 2), (N'MKN-03', N'Robotik Kol', 3);
 
 INSERT INTO HataTipleri (Hata_Adi, Kritiklik_Seviyesi, Makine_Tip_ID) VALUES 
-(N'Kýlcal Çizik', N'Az', 1), (N'Eksik Vida', N'Orta', 3), (N'Kýrýk Parça', N'Kritik', 2);
+(N'Kýlcal Çizik', N'Az', 1),
+(N'Boya Akmasý', N'Orta', 1),
+(N'Ton Farký', N'Kritik', 1),
+(N'Kýrýk Parça', N'Kritik', 2),
+(N'Çapaklý Kesim', N'Orta', 2),
+(N'Ölçü Hatasý', N'Kritik', 2),
+(N'Eksik Vida', N'Orta', 3),
+(N'Gevþek Baðlantý', N'Kritik', 3),
+(N'Ters Montaj', N'Kritik', 3);
 
 INSERT INTO Urunler (Urun_Adi, Makine_Tip_ID) VALUES 
-(N'Kapak (Ham)', 2), (N'Kapak (Montajlý)', 3), (N'Kapak (Boyalý)', 1);
-GO
+(N'Kapak (Boyalý)', 1),
+(N'Gövde (Boyalý)', 1),
+(N'Þasi (Astar Boyalý)', 1),
+(N'Kapak (Ham)', 2),
+(N'Profil (Kesilmiþ)', 2),
+(N'Sac Levha (Ebatlanmýþ)', 2),
+(N'Kapak (Montajlý)', 3),
+(N'Motor Bloðu (Montajlý)', 3),
+(N'Kontrol Paneli (Dizgili)', 3);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,7 +14,6 @@ namespace QC_Master
     public partial class UC_Gosterge : UserControl
     {
         // Veritabanı bağlantı dizesi (App.config üzerinden alınır)
-        private readonly string baglantiCumlesi = ConfigurationManager.ConnectionStrings["QCMasterConn"].ConnectionString;
 
         // Veri yenileme işlemleri için arka plan zamanlayıcısı
         private Timer motorTimer = new Timer();
@@ -46,7 +44,7 @@ namespace QC_Master
         // Veritabanından anlık üretim istatistiklerini ve son işlemleri çeker.
         private void VitriniGuncelle()
         {
-            using (SqlConnection baglanti = new SqlConnection(baglantiCumlesi))
+            using (SqlConnection baglanti = new SqlConnection(AnaForm.baglantiCumlesi))
             {
                 try
                 {

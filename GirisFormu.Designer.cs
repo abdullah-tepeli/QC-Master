@@ -93,7 +93,7 @@
             this.MaximizeBox = false;
             this.Name = "GirisFormu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "QC-Master - Kullanıcı Girişi";
+            this.Text = "QC-Master | Kullanıcı Girişi";
             this.Load += new System.EventHandler(this.GirisFormu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
