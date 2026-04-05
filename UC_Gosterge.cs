@@ -13,8 +13,6 @@ namespace QC_Master
 {
     public partial class UC_Gosterge : UserControl
     {
-        // Veritabanı bağlantı dizesi (App.config üzerinden alınır)
-
         // Veri yenileme işlemleri için arka plan zamanlayıcısı
         private Timer motorTimer = new Timer();
 
@@ -25,7 +23,7 @@ namespace QC_Master
 
         private void UC_Gosterge_Load(object sender, EventArgs e)
         {
-            // Zamanlayıcı yapılandırması (5000 ms = 5 saniye)
+            // Zamanlayıcı yapılandırması
             motorTimer.Interval = 5000;
             motorTimer.Tick += MotorTimer_Tick;
             if (this.Visible)
@@ -49,8 +47,7 @@ namespace QC_Master
                 try
                 {
                     baglanti.Open();
-
-                    // 1. ÜST PANEL İSTATİSTİKLERİ (Çoklu Sorgu - Performans Optimizasyonu)
+                    // 1. ÜST PANEL İSTATİSTİKLERİ
                     // Hata_ID IS NULL durumu 'Sağlam' üretimi temsil eder.
                     string istatistikSorgu = @"
                         SELECT COUNT(Log_ID) FROM UretimLoglari WHERE Hata_ID IS NULL AND CAST(Islem_Tarihi AS DATE) = CAST(GETDATE() AS DATE);
@@ -66,33 +63,27 @@ AND (
     OR (v.Baslangic_Saati > v.Bitis_Saati AND (CAST(GETDATE() AS TIME) >= v.Baslangic_Saati OR CAST(GETDATE() AS TIME) <= v.Bitis_Saati))
 );
                     ";
-
                     using (SqlCommand komut = new SqlCommand(istatistikSorgu, baglanti))
                     {
                         using (SqlDataReader reader = komut.ExecuteReader())
                         {
                             // Sorgu 1: Bugünkü Sağlam Üretim
                             if (reader.Read()) txtUretim.Text = reader[0].ToString();
-
                             // Sorgu 2: Bugünkü Toplam Fire
                             reader.NextResult();
                             if (reader.Read()) txtFire.Text = reader[0].ToString();
-
                             // Sorgu 3: Aktif Makine Sayısı
                             reader.NextResult();
                             if (reader.Read()) txtMakine.Text = reader[0].ToString();
-
                             // Sorgu 4: Aktif Personel Sayısı
                             reader.NextResult();
                             if (reader.Read()) txtPersonel.Text = reader[0].ToString();
                         }
                     }
-
                     // Fire Oranı Hesaplaması
                     double saglam = Convert.ToDouble(txtUretim.Text);
                     double fire = Convert.ToDouble(txtFire.Text);
                     double toplam = saglam + fire;
-
                     if (toplam > 0)
                     {
                         double oran = (fire / toplam) * 100;
@@ -102,8 +93,7 @@ AND (
                     {
                         txtOran.Text = "%0";
                     }
-
-                    // 2. ALT PANEL VERİ TABLOSU (Son 15 Üretim Logu)
+                    // 2. ALT PANEL VERİ TABLOSU
                     // İlişkisel tablolar birleştirilerek anlamlı veri seti oluşturulur.
                     string tabloSorgu = @"
                         SELECT TOP 15 
@@ -118,18 +108,16 @@ AND (
                         INNER JOIN Makineler m ON ul.Makine_ID = m.Makine_ID
                         INNER JOIN Urunler ur ON ul.Urun_ID = ur.Urun_ID
                         LEFT JOIN HataTipleri ht ON ul.Hata_ID = ht.Hata_ID
+                        WHERE CAST(Islem_Tarihi AS DATE) = CAST(GETDATE() AS DATE)
                         ORDER BY ul.Islem_Tarihi DESC;";
-
                     SqlDataAdapter adapt = new SqlDataAdapter(tabloSorgu, baglanti);
                     DataTable dt = new DataTable();
                     adapt.Fill(dt);
-
                     gridSonIslemler.DataSource = dt;
                 }
                 catch (Exception)
                 {
                     // Hata durumunda uygulamanın kilitlenmemesi için zamanlayıcı durdurulur.
-                    // Üretim ortamında loglama mekanizması (NLog, Serilog vb.) buraya eklenecektir.
                     motorTimer.Stop();
                 }
             }

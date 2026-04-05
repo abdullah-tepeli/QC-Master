@@ -112,6 +112,9 @@
     <EmbeddedResource Include="UC_Gosterge.resx">
       <DependentUpon>UC_Gosterge.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UC_Rapor.resx">
+      <DependentUpon>UC_Rapor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UC_UretimGirisi.resx">
       <DependentUpon>UC_UretimGirisi.cs</DependentUpon>
     </EmbeddedResource>
