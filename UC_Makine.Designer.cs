@@ -30,6 +30,7 @@
         {
             this.tabControlYonetim = new System.Windows.Forms.TabControl();
             this.tpMakineTip = new System.Windows.Forms.TabPage();
+            this.btnTipSil = new System.Windows.Forms.Button();
             this.btnTipTemizle = new System.Windows.Forms.Button();
             this.btnTipGuncelle = new System.Windows.Forms.Button();
             this.btnTipEkle = new System.Windows.Forms.Button();
@@ -38,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dgvMakineTip = new System.Windows.Forms.DataGridView();
             this.tpMakine = new System.Windows.Forms.TabPage();
+            this.btnMakineSil = new System.Windows.Forms.Button();
             this.btnMakineTemizle = new System.Windows.Forms.Button();
             this.btnMakineGuncelle = new System.Windows.Forms.Button();
             this.btnMakineEkle = new System.Windows.Forms.Button();
@@ -50,6 +52,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dgvMakine = new System.Windows.Forms.DataGridView();
             this.tpUrun = new System.Windows.Forms.TabPage();
+            this.btnUrunSil = new System.Windows.Forms.Button();
             this.btnUrunTemizle = new System.Windows.Forms.Button();
             this.btnUrunGuncelle = new System.Windows.Forms.Button();
             this.btnUrunEkle = new System.Windows.Forms.Button();
@@ -60,6 +63,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dgvUrun = new System.Windows.Forms.DataGridView();
             this.tpHata = new System.Windows.Forms.TabPage();
+            this.btnHataSil = new System.Windows.Forms.Button();
             this.btnHataTemizle = new System.Windows.Forms.Button();
             this.btnHataGuncelle = new System.Windows.Forms.Button();
             this.btnHataEkle = new System.Windows.Forms.Button();
@@ -71,10 +75,6 @@
             this.txtHataAdi = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvHata = new System.Windows.Forms.DataGridView();
-            this.btnTipSil = new System.Windows.Forms.Button();
-            this.btnMakineSil = new System.Windows.Forms.Button();
-            this.btnUrunSil = new System.Windows.Forms.Button();
-            this.btnHataSil = new System.Windows.Forms.Button();
             this.tabControlYonetim.SuspendLayout();
             this.tpMakineTip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMakineTip)).BeginInit();
@@ -117,11 +117,24 @@
             this.tpMakineTip.Text = "Makine Tipleri / Hatlar";
             this.tpMakineTip.UseVisualStyleBackColor = true;
             // 
+            // btnTipSil
+            // 
+            this.btnTipSil.BackColor = System.Drawing.Color.Red;
+            this.btnTipSil.ForeColor = System.Drawing.Color.White;
+            this.btnTipSil.Location = new System.Drawing.Point(760, 165);
+            this.btnTipSil.Name = "btnTipSil";
+            this.btnTipSil.Size = new System.Drawing.Size(120, 30);
+            this.btnTipSil.TabIndex = 7;
+            this.btnTipSil.Text = "SİL";
+            this.btnTipSil.UseVisualStyleBackColor = false;
+            this.btnTipSil.Visible = false;
+            this.btnTipSil.Click += new System.EventHandler(this.btnTipSil_Click);
+            // 
             // btnTipTemizle
             // 
             this.btnTipTemizle.Location = new System.Drawing.Point(630, 165);
             this.btnTipTemizle.Name = "btnTipTemizle";
-            this.btnTipTemizle.Size = new System.Drawing.Size(250, 30);
+            this.btnTipTemizle.Size = new System.Drawing.Size(120, 30);
             this.btnTipTemizle.TabIndex = 6;
             this.btnTipTemizle.Text = "TEMİZLE";
             this.btnTipTemizle.UseVisualStyleBackColor = true;
@@ -212,11 +225,24 @@
             this.tpMakine.Text = "Makineler / Tezgahlar";
             this.tpMakine.UseVisualStyleBackColor = true;
             // 
+            // btnMakineSil
+            // 
+            this.btnMakineSil.BackColor = System.Drawing.Color.Red;
+            this.btnMakineSil.ForeColor = System.Drawing.Color.White;
+            this.btnMakineSil.Location = new System.Drawing.Point(760, 285);
+            this.btnMakineSil.Name = "btnMakineSil";
+            this.btnMakineSil.Size = new System.Drawing.Size(120, 30);
+            this.btnMakineSil.TabIndex = 11;
+            this.btnMakineSil.Text = "SİL";
+            this.btnMakineSil.UseVisualStyleBackColor = false;
+            this.btnMakineSil.Visible = false;
+            this.btnMakineSil.Click += new System.EventHandler(this.btnMakineSil_Click);
+            // 
             // btnMakineTemizle
             // 
             this.btnMakineTemizle.Location = new System.Drawing.Point(630, 285);
             this.btnMakineTemizle.Name = "btnMakineTemizle";
-            this.btnMakineTemizle.Size = new System.Drawing.Size(250, 30);
+            this.btnMakineTemizle.Size = new System.Drawing.Size(120, 30);
             this.btnMakineTemizle.TabIndex = 10;
             this.btnMakineTemizle.Text = "TEMİZLE";
             this.btnMakineTemizle.UseVisualStyleBackColor = true;
@@ -339,11 +365,24 @@
             this.tpUrun.Text = "Üretilen Ürünler";
             this.tpUrun.UseVisualStyleBackColor = true;
             // 
+            // btnUrunSil
+            // 
+            this.btnUrunSil.BackColor = System.Drawing.Color.Red;
+            this.btnUrunSil.ForeColor = System.Drawing.Color.White;
+            this.btnUrunSil.Location = new System.Drawing.Point(760, 225);
+            this.btnUrunSil.Name = "btnUrunSil";
+            this.btnUrunSil.Size = new System.Drawing.Size(120, 30);
+            this.btnUrunSil.TabIndex = 9;
+            this.btnUrunSil.Text = "SİL";
+            this.btnUrunSil.UseVisualStyleBackColor = false;
+            this.btnUrunSil.Visible = false;
+            this.btnUrunSil.Click += new System.EventHandler(this.btnUrunSil_Click);
+            // 
             // btnUrunTemizle
             // 
             this.btnUrunTemizle.Location = new System.Drawing.Point(630, 225);
             this.btnUrunTemizle.Name = "btnUrunTemizle";
-            this.btnUrunTemizle.Size = new System.Drawing.Size(250, 30);
+            this.btnUrunTemizle.Size = new System.Drawing.Size(120, 30);
             this.btnUrunTemizle.TabIndex = 8;
             this.btnUrunTemizle.Text = "TEMİZLE";
             this.btnUrunTemizle.UseVisualStyleBackColor = true;
@@ -452,11 +491,24 @@
             this.tpHata.Text = "Hata Tanımları";
             this.tpHata.UseVisualStyleBackColor = true;
             // 
+            // btnHataSil
+            // 
+            this.btnHataSil.BackColor = System.Drawing.Color.Red;
+            this.btnHataSil.ForeColor = System.Drawing.Color.White;
+            this.btnHataSil.Location = new System.Drawing.Point(760, 285);
+            this.btnHataSil.Name = "btnHataSil";
+            this.btnHataSil.Size = new System.Drawing.Size(120, 30);
+            this.btnHataSil.TabIndex = 11;
+            this.btnHataSil.Text = "SİL";
+            this.btnHataSil.UseVisualStyleBackColor = false;
+            this.btnHataSil.Visible = false;
+            this.btnHataSil.Click += new System.EventHandler(this.btnHataSil_Click);
+            // 
             // btnHataTemizle
             // 
             this.btnHataTemizle.Location = new System.Drawing.Point(630, 285);
             this.btnHataTemizle.Name = "btnHataTemizle";
-            this.btnHataTemizle.Size = new System.Drawing.Size(250, 30);
+            this.btnHataTemizle.Size = new System.Drawing.Size(120, 30);
             this.btnHataTemizle.TabIndex = 10;
             this.btnHataTemizle.Text = "TEMİZLE";
             this.btnHataTemizle.UseVisualStyleBackColor = true;
@@ -565,58 +617,6 @@
             this.dgvHata.Size = new System.Drawing.Size(600, 500);
             this.dgvHata.TabIndex = 0;
             this.dgvHata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHata_CellClick);
-            // 
-            // btnTipSil
-            // 
-            this.btnTipSil.BackColor = System.Drawing.Color.Red;
-            this.btnTipSil.ForeColor = System.Drawing.Color.White;
-            this.btnTipSil.Location = new System.Drawing.Point(760, 165);
-            this.btnTipSil.Name = "btnTipSil";
-            this.btnTipSil.Size = new System.Drawing.Size(120, 30);
-            this.btnTipSil.TabIndex = 7;
-            this.btnTipSil.Text = "SİL";
-            this.btnTipSil.UseVisualStyleBackColor = false;
-            this.btnTipSil.Visible = false;
-            this.btnTipSil.Click += new System.EventHandler(this.btnTipSil_Click);
-            // 
-            // btnMakineSil
-            // 
-            this.btnMakineSil.BackColor = System.Drawing.Color.Red;
-            this.btnMakineSil.ForeColor = System.Drawing.Color.White;
-            this.btnMakineSil.Location = new System.Drawing.Point(760, 285);
-            this.btnMakineSil.Name = "btnMakineSil";
-            this.btnMakineSil.Size = new System.Drawing.Size(120, 30);
-            this.btnMakineSil.TabIndex = 11;
-            this.btnMakineSil.Text = "SİL";
-            this.btnMakineSil.UseVisualStyleBackColor = false;
-            this.btnMakineSil.Visible = false;
-            this.btnMakineSil.Click += new System.EventHandler(this.btnMakineSil_Click);
-            // 
-            // btnUrunSil
-            // 
-            this.btnUrunSil.BackColor = System.Drawing.Color.Red;
-            this.btnUrunSil.ForeColor = System.Drawing.Color.White;
-            this.btnUrunSil.Location = new System.Drawing.Point(760, 225);
-            this.btnUrunSil.Name = "btnUrunSil";
-            this.btnUrunSil.Size = new System.Drawing.Size(120, 30);
-            this.btnUrunSil.TabIndex = 9;
-            this.btnUrunSil.Text = "SİL";
-            this.btnUrunSil.UseVisualStyleBackColor = false;
-            this.btnUrunSil.Visible = false;
-            this.btnUrunSil.Click += new System.EventHandler(this.btnUrunSil_Click);
-            // 
-            // btnHataSil
-            // 
-            this.btnHataSil.BackColor = System.Drawing.Color.Red;
-            this.btnHataSil.ForeColor = System.Drawing.Color.White;
-            this.btnHataSil.Location = new System.Drawing.Point(760, 285);
-            this.btnHataSil.Name = "btnHataSil";
-            this.btnHataSil.Size = new System.Drawing.Size(120, 30);
-            this.btnHataSil.TabIndex = 11;
-            this.btnHataSil.Text = "SİL";
-            this.btnHataSil.UseVisualStyleBackColor = false;
-            this.btnHataSil.Visible = false;
-            this.btnHataSil.Click += new System.EventHandler(this.btnHataSil_Click);
             // 
             // UC_Makine
             // 

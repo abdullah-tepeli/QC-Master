@@ -70,24 +70,6 @@ namespace QC_Master
             }
         }
 
-        // Veritabanında belirtilen tablo ve kolonda, verilen değerin eşleşip eşleşmediğini kontrol eder.
-        // Mükerrer kayıt girişlerini engellemek için kullanılır.
-        private bool KayitVarMi(string tablo, string kolon, string deger, string idKolon = "", int haricID = -1)
-        {
-            using (SqlConnection baglanti = new SqlConnection(AnaForm.baglantiCumlesi))
-            {
-                string sorgu = $"SELECT COUNT(*) FROM {tablo} WHERE {kolon} = @deger";
-                if (haricID != -1) sorgu += $" AND {idKolon} != @id";
-
-                SqlCommand cmd = new SqlCommand(sorgu, baglanti);
-                cmd.Parameters.AddWithValue("@deger", deger);
-                if (haricID != -1) cmd.Parameters.AddWithValue("@id", haricID);
-
-                baglanti.Open();
-                return (int)cmd.ExecuteScalar() > 0;
-            }
-        }
-
         #region 1. SEKME: MAKİNE TİPLERİ (HAT YÖNETİMİ)
 
         private void MakineTipleriniGetir()
@@ -130,7 +112,7 @@ namespace QC_Master
         {
             if (string.IsNullOrWhiteSpace(txtTipAdi.Text)) return;
 
-            if (KayitVarMi("MakineTipleri", "Tip_Adi", txtTipAdi.Text.Trim()))
+            if (AnaForm.KayitVarMi("MakineTipleri", "Tip_Adi", txtTipAdi.Text.Trim()))
             {
                 MessageBox.Show("Bu hat adı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -153,7 +135,7 @@ namespace QC_Master
         {
             if (seciliTipID == -1 || string.IsNullOrWhiteSpace(txtTipAdi.Text)) return;
 
-            if (KayitVarMi("MakineTipleri", "Tip_Adi", txtTipAdi.Text.Trim(), "Tip_ID", seciliTipID))
+            if (AnaForm.KayitVarMi("MakineTipleri", "Tip_Adi", txtTipAdi.Text.Trim(), "Tip_ID", seciliTipID))
             {
                 MessageBox.Show("Bu hat adı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -247,7 +229,7 @@ namespace QC_Master
         {
             if (string.IsNullOrWhiteSpace(txtMakineKodu.Text) || string.IsNullOrWhiteSpace(txtMakineAdi.Text) || cmbMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("Makineler", "Makine_Kodu", txtMakineKodu.Text.Trim()))
+            if (AnaForm.KayitVarMi("Makineler", "Makine_Kodu", txtMakineKodu.Text.Trim()))
             {
                 MessageBox.Show("Bu makine kodu sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -271,7 +253,7 @@ namespace QC_Master
         {
             if (seciliMakineID == -1 || string.IsNullOrWhiteSpace(txtMakineKodu.Text) || string.IsNullOrWhiteSpace(txtMakineAdi.Text) || cmbMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("Makineler", "Makine_Kodu", txtMakineKodu.Text.Trim(), "Makine_ID", seciliMakineID))
+            if (AnaForm.KayitVarMi("Makineler", "Makine_Kodu", txtMakineKodu.Text.Trim(), "Makine_ID", seciliMakineID))
             {
                 MessageBox.Show("Bu makine kodu sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -365,7 +347,7 @@ namespace QC_Master
         {
             if (string.IsNullOrWhiteSpace(txtUrunAdi.Text) || cmbUrunMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("Urunler", "Urun_Adi", txtUrunAdi.Text.Trim()))
+            if (AnaForm.KayitVarMi("Urunler", "Urun_Adi", txtUrunAdi.Text.Trim()))
             {
                 MessageBox.Show("Bu ürün adı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -388,7 +370,7 @@ namespace QC_Master
         {
             if (seciliUrunID == -1 || string.IsNullOrWhiteSpace(txtUrunAdi.Text) || cmbUrunMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("Urunler", "Urun_Adi", txtUrunAdi.Text.Trim(), "Urun_ID", seciliUrunID))
+            if (AnaForm.KayitVarMi("Urunler", "Urun_Adi", txtUrunAdi.Text.Trim(), "Urun_ID", seciliUrunID))
             {
                 MessageBox.Show("Bu ürün adı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -481,7 +463,7 @@ namespace QC_Master
         {
             if (string.IsNullOrWhiteSpace(txtHataAdi.Text) || cmbKritiklik.SelectedIndex == -1 || cmbHataMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("HataTipleri", "Hata_Adi", txtHataAdi.Text.Trim()))
+            if (AnaForm.KayitVarMi("HataTipleri", "Hata_Adi", txtHataAdi.Text.Trim()))
             {
                 MessageBox.Show("Bu hata tanımı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -505,7 +487,7 @@ namespace QC_Master
         {
             if (seciliHataID == -1 || string.IsNullOrWhiteSpace(txtHataAdi.Text) || cmbKritiklik.SelectedIndex == -1 || cmbHataMakineTipi.SelectedIndex == -1) return;
 
-            if (KayitVarMi("HataTipleri", "Hata_Adi", txtHataAdi.Text.Trim(), "Hata_ID", seciliHataID))
+            if (AnaForm.KayitVarMi("HataTipleri", "Hata_Adi", txtHataAdi.Text.Trim(), "Hata_ID", seciliHataID))
             {
                 MessageBox.Show("Bu hata tanımı sistemde zaten mevcut.", "Mükerrer Kayıt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

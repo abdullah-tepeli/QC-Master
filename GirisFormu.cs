@@ -52,7 +52,7 @@ namespace QC_Master
             }
         }
         // Şifre güvenliği için SHA256 şifreleme metodu
-        private string SifreyiHashle(string sifre)
+        public static string SifreyiHashle(string sifre)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {

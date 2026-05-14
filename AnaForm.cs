@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -61,6 +62,24 @@ namespace QC_Master
             icerikPaneli.Dock = DockStyle.Fill;
             // İlgili denetimin oluşturulan sekmenin içerik koleksiyonuna dahil edilmesi
             tabControl1.TabPages[sekmeAnahtari].Controls.Add(icerikPaneli);
+        }
+
+        // Veritabanında belirtilen tablo ve kolonda, verilen değerin eşleşip eşleşmediğini kontrol eder.
+        // Mükerrer kayıt girişlerini engellemek için kullanılır.
+        public static bool KayitVarMi(string tablo, string kolon, string deger, string idKolon = "", int haricID = -1)
+        {
+            using (SqlConnection baglanti = new SqlConnection(baglantiCumlesi))
+            {
+                string sorgu = $"SELECT COUNT(*) FROM {tablo} WHERE {kolon} = @deger";
+                if (haricID != -1) sorgu += $" AND {idKolon} != @id";
+
+                SqlCommand cmd = new SqlCommand(sorgu, baglanti);
+                cmd.Parameters.AddWithValue("@deger", deger);
+                if (haricID != -1) cmd.Parameters.AddWithValue("@id", haricID);
+
+                baglanti.Open();
+                return (int)cmd.ExecuteScalar() > 0;
+            }
         }
     }
 }

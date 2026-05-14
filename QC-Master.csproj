@@ -115,6 +115,9 @@
     <EmbeddedResource Include="UC_Makine.resx">
       <DependentUpon>UC_Makine.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UC_Personel.resx">
+      <DependentUpon>UC_Personel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UC_Rapor.resx">
       <DependentUpon>UC_Rapor.cs</DependentUpon>
     </EmbeddedResource>
