@@ -53,6 +53,8 @@
             this.btnGit = new System.Windows.Forms.Button();
             this.btnSonraki = new System.Windows.Forms.Button();
             this.lblToplamKayit = new System.Windows.Forms.Label();
+            this.btnExcel = new System.Windows.Forms.Button();
+            this.btnPdf = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSayfaNo)).BeginInit();
             this.SuspendLayout();
@@ -320,13 +322,41 @@
             this.lblToplamKayit.Location = new System.Drawing.Point(750, 510);
             this.lblToplamKayit.Name = "lblToplamKayit";
             this.lblToplamKayit.Size = new System.Drawing.Size(80, 13);
-            this.lblToplamKayit.TabIndex = 24;
+            this.lblToplamKayit.TabIndex = 26;
             this.lblToplamKayit.Text = "Toplam: 0 Kayıt";
+            // 
+            // btnExcel
+            // 
+            this.btnExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExcel.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnExcel.ForeColor = System.Drawing.Color.White;
+            this.btnExcel.Location = new System.Drawing.Point(490, 500);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(120, 35);
+            this.btnExcel.TabIndex = 24;
+            this.btnExcel.Text = "EXCEL\'E AKTAR";
+            this.btnExcel.UseVisualStyleBackColor = false;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
+            // 
+            // btnPdf
+            // 
+            this.btnPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPdf.BackColor = System.Drawing.Color.Firebrick;
+            this.btnPdf.ForeColor = System.Drawing.Color.White;
+            this.btnPdf.Location = new System.Drawing.Point(620, 500);
+            this.btnPdf.Name = "btnPdf";
+            this.btnPdf.Size = new System.Drawing.Size(120, 35);
+            this.btnPdf.TabIndex = 25;
+            this.btnPdf.Text = "PDF\'E AKTAR";
+            this.btnPdf.UseVisualStyleBackColor = false;
+            this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
             // 
             // UC_Rapor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnPdf);
+            this.Controls.Add(this.btnExcel);
             this.Controls.Add(this.lblToplamKayit);
             this.Controls.Add(this.btnSonraki);
             this.Controls.Add(this.btnGit);
@@ -388,5 +418,7 @@
         private System.Windows.Forms.Button btnGit;
         private System.Windows.Forms.Button btnSonraki;
         private System.Windows.Forms.Label lblToplamKayit;
+        private System.Windows.Forms.Button btnExcel;
+        private System.Windows.Forms.Button btnPdf;
     }
 }

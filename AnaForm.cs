@@ -15,13 +15,15 @@ namespace QC_Master
     public partial class AnaForm : Form
     {
         public static int aktifKullaniciID;
+        public static string aktifKullaniciSicil;
         public static string aktifRol;
         public static string aktifKullanici;
         public static readonly string baglantiCumlesi = ConfigurationManager.ConnectionStrings["QCMasterConn"].ConnectionString;
-        public AnaForm(int kullaniciID, string rol, string adSoyad)
+        public AnaForm(int kullaniciID, string rol, string sicilNo, string adSoyad)
         {
             InitializeComponent();
             aktifKullaniciID = kullaniciID;
+            aktifKullaniciSicil = sicilNo;
             aktifRol = rol;
             aktifKullanici = adSoyad;
         }

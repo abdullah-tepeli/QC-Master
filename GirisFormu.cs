@@ -147,7 +147,7 @@ namespace QC_Master
                                         return;
                                     }
                                 }
-                                AnaForm anaEkran = new AnaForm(id, rolAdi, adSoyad);
+                                AnaForm anaEkran = new AnaForm(id, rolAdi, sicil, adSoyad);
                                 this.Hide();
                                 anaEkran.Show();
                             }

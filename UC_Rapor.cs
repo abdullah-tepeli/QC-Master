@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using ClosedXML.Excel;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace QC_Master
 {
@@ -202,6 +206,168 @@ namespace QC_Master
             }
         }
 
+        // Ekrandaki sayfalama kısıtlamalarından bağımsız olarak, mevcut filtre kriterlerine uyan tüm üretim loglarını veritabanından çeker.
+        // Dışa aktarım (Excel/PDF) işlemleri için asıl veri kaynağını oluşturur.
+        private DataTable TumRaporuGetir()
+        {
+            using (SqlConnection baglanti = new SqlConnection(AnaForm.baglantiCumlesi))
+            {
+                string whereClause = " WHERE 1=1 ";
+                SqlCommand komut = new SqlCommand();
+                komut.Connection = baglanti;
+
+                if (aktifFiltreKullanici != -1)
+                {
+                    whereClause += " AND L.Kullanici_ID = @kulID";
+                    komut.Parameters.AddWithValue("@kulID", aktifFiltreKullanici);
+                }
+                if (aktifFiltreMakine != -1)
+                {
+                    whereClause += " AND L.Makine_ID = @makID";
+                    komut.Parameters.AddWithValue("@makID", aktifFiltreMakine);
+                }
+                if (aktifFiltreUrun != -1)
+                {
+                    whereClause += " AND L.Urun_ID = @urunID";
+                    komut.Parameters.AddWithValue("@urunID", aktifFiltreUrun);
+                }
+                if (aktifFiltreHata == -2)
+                {
+                    whereClause += " AND L.Hata_ID IS NULL";
+                }
+                else if (aktifFiltreHata != -1)
+                {
+                    whereClause += " AND L.Hata_ID = @hataID";
+                    komut.Parameters.AddWithValue("@hataID", aktifFiltreHata);
+                }
+                if (aktifFiltreBaslangic.HasValue)
+                {
+                    whereClause += " AND L.Islem_Tarihi >= @basTar";
+                    komut.Parameters.AddWithValue("@basTar", aktifFiltreBaslangic.Value);
+                }
+                if (aktifFiltreBitis.HasValue)
+                {
+                    whereClause += " AND L.Islem_Tarihi <= @bitTar";
+                    komut.Parameters.AddWithValue("@bitTar", aktifFiltreBitis.Value);
+                }
+
+                string anaSorgu = $@"
+                SELECT L.Log_ID, K.Ad_Soyad as [Operatör], M.Makine_Adi as [Makine], 
+                       U.Urun_Adi as [Ürün], ISNULL(H.Hata_Adi, 'Sağlam') as [Durum], L.Islem_Tarihi as [Tarih]
+                FROM UretimLoglari L
+                JOIN Kullanicilar K ON L.Kullanici_ID = K.Kullanici_ID
+                JOIN Makineler M ON L.Makine_ID = M.Makine_ID
+                JOIN Urunler U ON L.Urun_ID = U.Urun_ID
+                LEFT JOIN HataTipleri H ON L.Hata_ID = H.Hata_ID
+                {whereClause}
+                ORDER BY {aktifSiralamaSutunu} {aktifSiralamaYonu}";
+
+                komut.CommandText = anaSorgu;
+                SqlDataAdapter da = new SqlDataAdapter(komut);
+                DataTable dtSonuc = new DataTable();
+                da.Fill(dtSonuc);
+                return dtSonuc;
+            }
+        }
+
+        // Filtrelenmiş üretim loglarını ClosedXML kütüphanesi kullanarak Excel (.xlsx) formatında dışa aktarır.
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            DataTable dt = TumRaporuGetir();
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Dışa aktarılacak herhangi bir kayıt bulunamadı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Dosyası|*.xlsx";
+            sfd.FileName = "Kalite_Raporu_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var ws = wb.Worksheets.Add("Rapor");
+
+                    // Rapor başlık ve antet bilgileri
+                    ws.Cell(1, 1).Value = "QC-MASTER KALİTE VE FİRE RAPORU";
+                    ws.Cell(1, 1).Style.Font.Bold = true;
+                    ws.Cell(1, 1).Style.Font.FontSize = 14;
+
+                    ws.Cell(2, 1).Value = "Oluşturulma Tarihi: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+                    ws.Cell(3, 1).Value = $"Raporu Alan: {AnaForm.aktifKullaniciSicil} - {AnaForm.aktifKullanici}";
+
+                    // Veri tablosunun aktarımı
+                    ws.Cell(5, 1).InsertTable(dt);
+                    ws.Columns().AdjustToContents();
+
+                    wb.SaveAs(sfd.FileName);
+                }
+                MessageBox.Show("Excel dosyası başarıyla oluşturuldu ve kaydedildi.", "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // Filtrelenmiş üretim loglarını iTextSharp kütüphanesi kullanarak PDF formatında dışa aktarır.
+        // Türkçe karakter uyumluluğu için Arial fontu gömülü olarak kullanılır.
+        private void btnPdf_Click(object sender, EventArgs e)
+        {
+            DataTable dt = TumRaporuGetir();
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Dışa aktarılacak herhangi bir kayıt bulunamadı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PDF Dosyası|*.pdf";
+            sfd.FileName = "Kalite_Raporu_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".pdf";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream stream = new FileStream(sfd.FileName, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 20f, 0f);
+                    PdfWriter.GetInstance(pdfDoc, stream);
+                    pdfDoc.Open();
+
+                    // Türkçe karakter desteği için font ayarı
+                    BaseFont arial = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    iTextSharp.text.Font baslikFont = new iTextSharp.text.Font(arial, 14, iTextSharp.text.Font.BOLD);
+                    iTextSharp.text.Font normalFont = new iTextSharp.text.Font(arial, 10, iTextSharp.text.Font.NORMAL);
+
+                    Paragraph baslik = new Paragraph("QC-MASTER KALİTE VE FİRE RAPORU\n", baslikFont);
+                    baslik.Alignment = Element.ALIGN_CENTER;
+                    pdfDoc.Add(baslik);
+
+                    Paragraph antet = new Paragraph($"Oluşturulma Tarihi: {DateTime.Now:dd.MM.yyyy HH:mm}\nRaporu Alan: {AnaForm.aktifKullaniciSicil} - {AnaForm.aktifKullanici}\n\n", normalFont);
+                    pdfDoc.Add(antet);
+
+                    PdfPTable pdfTable = new PdfPTable(dt.Columns.Count);
+                    pdfTable.WidthPercentage = 100;
+
+                    foreach (DataColumn column in dt.Columns)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(column.ColumnName, baslikFont));
+                        cell.BackgroundColor = new BaseColor(240, 240, 240);
+                        pdfTable.AddCell(cell);
+                    }
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        foreach (object item in row.ItemArray)
+                        {
+                            pdfTable.AddCell(new Phrase(item.ToString(), normalFont));
+                        }
+                    }
+
+                    pdfDoc.Add(pdfTable);
+                    pdfDoc.Close();
+                }
+                MessageBox.Show("PDF dosyası başarıyla oluşturuldu ve kaydedildi.", "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private void UC_Rapor_Load(object sender, EventArgs e)
         {
             // Tarih başlangıç ayarlarını oluştur
@@ -274,5 +440,6 @@ namespace QC_Master
                 RaporVerileriniGetir();
             }
         }
+
     }
 }
